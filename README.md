@@ -139,7 +139,7 @@ is intentionally separate from the checked-in result files.
 ## Real-world experiments
 
 To reproduce the real-world experiments reported in the paper, see the
-implementation in the original [xuchi project](https://github.com/xuchi7/RPnP_plusplus).
+implementation in the original [MATLAB project](https://github.com/xuchi7/RPnP_plusplus).
 
 ## Citation
 
