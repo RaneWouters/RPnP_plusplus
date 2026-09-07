@@ -1,0 +1,3 @@
+add_executable(example_r2ppnp example.cpp)
+target_link_libraries(example_r2ppnp PRIVATE r2ppnp)
+set_global_target_properties(example_r2ppnp)

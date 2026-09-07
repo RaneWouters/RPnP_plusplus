@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: Native ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15-intel, macos-14, windows-latest]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Configure
+        run: >-
+          cmake -S . -B build
+          -DBUILD_PYTHON=OFF
+          -DBUILD_TESTS=ON
+          -DBUILD_EXAMPLES=ON
+          -DINSTALL_CPP_SDK=ON
+          -DUSE_BUNDLED_EIGEN3=ON
+          -DUSE_SYSTEM_EIGEN3=OFF
+          -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --config Release --parallel 2
+      - name: Test
+        run: cmake -E chdir build ctest -C Release --output-on-failure
+      - name: Install C++ SDK
+        run: cmake --install build --config Release --prefix "${{ runner.temp }}/r2ppnp-install"
+      - name: Configure installed-package consumer
+        run: >-
+          cmake -S tests/consumer -B consumer-build
+          -DCMAKE_PREFIX_PATH="${{ runner.temp }}/r2ppnp-install"
+      - name: Build and run installed-package consumer
+        run: |
+          cmake --build consumer-build --config Release --parallel 2
+          cmake -E chdir consumer-build ctest -C Release --output-on-failure
+
+  sanitizer:
+    name: ASan and UBSan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Configure
+        env:
+          CXXFLAGS: -fsanitize=address,undefined -fno-omit-frame-pointer
+          LDFLAGS: -fsanitize=address,undefined
+        run: >-
+          cmake -S . -B build-sanitize
+          -DBUILD_PYTHON=OFF
+          -DBUILD_TESTS=ON
+          -DINSTALL_CPP_SDK=OFF
+          -DUSE_BUNDLED_EIGEN3=ON
+          -DUSE_SYSTEM_EIGEN3=OFF
+          -DCMAKE_BUILD_TYPE=Debug
+      - name: Build
+        run: cmake --build build-sanitize --parallel 2
+      - name: Test
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: cmake -E chdir build-sanitize ctest --output-on-failure
+
+  source-package:
+    name: Source package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Build and check sdist
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build --sdist
+          python -m twine check dist/*
+      - name: Reject accidental benchmark data
+        shell: bash
+        run: |
+          ! tar -tzf dist/rpnp_pp-*.tar.gz | grep -E '(^|/)benchmark/|(^|/)tests/benchmark/|\.(mat|pkl|whl|so|dll|dylib)$|\.tar\.gz$'
+      - name: Build wheel from sdist
+        shell: bash
+        run: |
+          mkdir sdist-wheel
+          python -m pip wheel --no-deps --wheel-dir sdist-wheel dist/rpnp_pp-*.tar.gz
+          python -m pip install --force-reinstall sdist-wheel/rpnp_pp-*.whl
+          python -m pip install pytest
+          python -m pytest tests/python

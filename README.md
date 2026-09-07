@@ -1,15 +1,28 @@
-# RPnP++
+# RPnP++: A Hough Voting-Based 2-Point RANSAC Solution to the Perspective-n-Point Problem
 
-RPnP++ is a calibrated-camera Perspective-n-Point solver based on Hough
-voting and 2-point RANSAC. It provides a C++17 library and a Python package
-with pixel-coordinate solving, normalized-coordinate solving, and optional
-Gauss–Newton refinement.
+[![IEEE TIP](https://img.shields.io/badge/IEEE%20TIP-Paper-00629B?logo=ieee&logoColor=white)](https://doi.org/10.1109/TIP.2025.3622336) [![PyPI](https://img.shields.io/badge/PyPI-Package-E67E22?logo=pypi&logoColor=white)](https://pypi.org/project/rpnp-pp/)
 
-The paper associated with this implementation is:
+The C++ and Python implementation of the paper
+[A Hough Voting-Based 2-Point RANSAC Solution to the Perspective-n-Point Problem](https://doi.org/10.1109/TIP.2025.3622336).
 
-> Chi Xu, Tingrui Guo, Yuan Huang, and Li Cheng, “A Hough Voting-Based
-> 2-Point RANSAC Solution to the Perspective-n-Point Problem,” IEEE
-> Transactions on Image Processing, 2025.
+Chi Xu, Tingrui Guo, Yuan Huang, Li Cheng
+
+## Abstract
+
+> Perspective-n-point is a fundamental problem in multi-view geometry, yet two critical challenges persist: 1) The issues of high outlier rate and near degenerate cases exert a substantial impact on the robustness of existing PnP methods. In the worst-case where both issues are in presence, existing methods tend to either produce erroneous results or become computationally prohibitive. 2) Conventionally, the hypothetical pose with the maximum inlier-set is assumed to be correct. However, it remains unclear whether this assumption holds when the outlier rate approaches ultra-high levels, and along this line what is the maximum amount of outliers that can be robustly handled. To address these challenges, this paper proposes a novel Hough voting based 2-point RANSAC solution. To our knowledge, it is the first PnP solution capable of accurately and efficiently handling high outlier rates in near-degenerate cases. Extensive empirical evaluations have been conducted using the proposed approach, with a particular focus on a systematic examination under ultra-high outlier rates. The results show that, on random synthetic data, our approach works robustly even when dealing with up to 99% outliers. Meanwhile on real-world datasets, the maximum inlier-set assumption oftentimes fails when the outlier rate exceeds 97%, as the incorrect hypothetical poses may yield more inliers than the ground-truths.
+
+<p align="center">
+  <img src="assets/fig/camera-geometry-complete.svg" alt="Annotated camera projection geometry diagram" width="30%">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+  <img src="assets/paper/fig2_real_scatter.png" alt="Real-world scatter plot" width="30%">
+</p>
+
+## Highlights
+
+- A novel Hough voting based 2-point RANSAC solution is proposed.
+- It is the first PnP solution capable of accurately and efficiently handling
+  high outlier rates in near-degenerate cases.
+- Compared with the state-of-the-art LoP4P, it achieves higher accuracy while
+  being up to 800× faster.
 
 ## Installation
 

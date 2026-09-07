@@ -1,0 +1,16 @@
+name: rpnp-plus-plus
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.9,<3.14
+  - numpy>=1.23
+  - scipy>=1.9
+  - matplotlib>=3.7
+  - opencv>=4.5
+  - pybind11=2.13.6
+  - cmake>=3.16
+  - ninja
+  - pip
+  - pip:
+      - build>=1.2

@@ -1,0 +1,141 @@
+name: Wheels and publish
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      publish-testpypi:
+        description: Publish the tested artifacts to TestPyPI
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify-version:
+    name: Verify release version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Compare version declarations and tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          import os, pathlib, re, tomllib
+          root = pathlib.Path('.')
+          version = tomllib.loads((root / 'pyproject.toml').read_text())['project']['version']
+          declared = {
+              'python': re.search(r'__version__ = "([^"]+)"', (root / 'python/rpnp_pp/__init__.py').read_text()).group(1),
+              'binding': re.search(r'm.attr\("__version__"\) = "([^"]+)"', (root / 'python/bindings.cpp').read_text()).group(1),
+              'cmake': re.search(r'project\(r2ppnp_cpp VERSION ([^ ]+)', (root / 'CMakeLists.txt').read_text()).group(1),
+          }
+          if any(value != version for value in declared.values()):
+              raise SystemExit(f'version mismatch: project={version}, declarations={declared}')
+          if os.environ['EVENT_NAME'] == 'push' and os.environ['RELEASE_TAG'] != f'v{version}':
+              raise SystemExit(f'tag {os.environ["RELEASE_TAG"]!r} does not match v{version}')
+          print(f'version {version} is consistent')
+          PY
+
+  wheels:
+    name: Wheels on ${{ matrix.os }}
+    needs: verify-version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-15-intel, macos-14]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build and test wheels
+        uses: pypa/cibuildwheel@v4.1.0
+        with:
+          output-dir: wheelhouse
+      - uses: actions/upload-artifact@v6
+        with:
+          name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+  sdist:
+    name: Source distribution
+    needs: verify-version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Build and verify
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build --sdist
+          python -m twine check dist/*
+      - name: Reject accidental generated artifacts
+        shell: bash
+        run: |
+          ! tar -tzf dist/rpnp_pp-*.tar.gz | grep -E '(^|/)benchmark/|\.(mat|pkl|whl|so|dll|dylib)$|\.tar\.gz$'
+      - uses: actions/upload-artifact@v6
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  publish-pypi:
+    name: Publish to PyPI
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [wheels, sdist]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/rpnp-pp
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          pattern: "wheels-*"
+          path: dist
+          merge-multiple: true
+      - uses: actions/download-artifact@v6
+        with:
+          name: sdist
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    if: github.event_name == 'workflow_dispatch' && inputs.publish-testpypi
+    needs: [wheels, sdist]
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/rpnp-pp
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          pattern: "wheels-*"
+          path: dist
+          merge-multiple: true
+      - uses: actions/download-artifact@v6
+        with:
+          name: sdist
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/

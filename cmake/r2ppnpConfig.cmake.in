@@ -1,0 +1,16 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+if(@R2PPNP_EIGEN_BUNDLED_ACTIVE@)
+    if(NOT TARGET Eigen3::Eigen)
+        add_library(Eigen3::Eigen INTERFACE IMPORTED)
+        set_target_properties(Eigen3::Eigen PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_INCLUDEDIR@/eigen3")
+    endif()
+else()
+    find_dependency(Eigen3 3.3 NO_MODULE)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/r2ppnpTargets.cmake")
+
+check_required_components(r2ppnp)

@@ -1,0 +1,5 @@
+add_executable(test_r2ppnp test_r2ppnp.cpp)
+target_link_libraries(test_r2ppnp PRIVATE r2ppnp)
+set_global_target_properties(test_r2ppnp)
+add_test(NAME RPnPPlusPlus_Test COMMAND test_r2ppnp)
+set_tests_properties(RPnPPlusPlus_Test PROPERTIES TIMEOUT 20)

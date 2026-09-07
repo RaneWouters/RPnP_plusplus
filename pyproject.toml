@@ -1,0 +1,80 @@
+[build-system]
+requires = ["scikit-build-core==1.0.3", "pybind11==2.13.6"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "rpnp_pp"
+version = "0.1.0"
+description = "RPnP++: Hough voting-based 2-point RANSAC solver for robust Perspective-n-Point estimation"
+readme = "README_PYTHON.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = [
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "3rdparty/eigen3/COPYING.*",
+    "3rdparty/licenses/pybind11-LICENSE",
+]
+authors = [
+    {name = "Chi Xu", email = "xuchi@cug.edu.cn"},
+    {name = "Tingrui Guo"},
+    {name = "Yuan Huang"},
+    {name = "Li Cheng"},
+]
+maintainers = [{name = "RaneWouters", email = "1540656951@qq.com"}]
+keywords = ["computer vision", "camera pose", "PnP", "RANSAC", "Hough voting"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: C++",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = ["numpy>=1.23"]
+
+[project.urls]
+Homepage = "https://github.com/RaneWouters/RPnP_plusplus"
+Repository = "https://github.com/RaneWouters/RPnP_plusplus"
+Original-MATLAB = "https://github.com/xuchi7/RPnP_plusplus"
+Paper = "https://doi.org/10.1109/TIP.2025.3622336"
+Issues = "https://github.com/RaneWouters/RPnP_plusplus/issues"
+
+[project.optional-dependencies]
+test = ["pytest>=7", "pytest-timeout>=2"]
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+wheel.packages = ["python/rpnp_pp"]
+sdist.exclude = [
+    "build*/**",
+    "dist*/**",
+    "release_*/**",
+    "benchmark/**",
+    "tests/debug_data.h",
+    "tests/benchmark/**",
+]
+cmake.args = [
+    "-DBUILD_PYTHON=ON",
+    "-DBUILD_BENCHMARK=OFF",
+    "-DBUILD_TESTS=OFF",
+    "-DBUILD_EXAMPLES=OFF",
+    "-DINSTALL_CPP_SDK=OFF",
+    "-DUSE_BUNDLED_EIGEN3=ON",
+    "-DUSE_SYSTEM_EIGEN3=OFF",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]
+addopts = "--strict-config --strict-markers"
+
+[tool.cibuildwheel]
+build = ["cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+skip = ["*-musllinux_*", "pp*"]
+test-requires = ["pytest>=7"]
+test-command = "python -m pytest {project}/tests/python"
+build-verbosity = 1

@@ -1,0 +1,77 @@
+{
+  "schema": 2,
+  "benchmark": "six-method-pnp-comparison",
+  "parameters": {
+    "configurations": [
+      "ordinary-3d",
+      "quasi-singular",
+      "planar"
+    ],
+    "rates": [
+      0.05,
+      0.25,
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.97
+    ],
+    "n_tests": 10,
+    "inlier_count": 100,
+    "noise_pixels": 5.0,
+    "focal": 1000.0,
+    "threshold_pixels": 10.0,
+    "max_trials": 5000,
+    "master_seed": 20260805,
+    "methods": [
+      "OpenCV-P3P-RANSAC",
+      "OpenCV-AP3P-RANSAC",
+      "OpenCV-EPNP-RANSAC",
+      "OpenCV-SQPNP-RANSAC-REFINE",
+      "LoP4P",
+      "RPnP++"
+    ]
+  },
+  "display_labels": {
+    "OpenCV-P3P-RANSAC": "P3P (OpenCV)",
+    "OpenCV-AP3P-RANSAC": "AP3P (OpenCV)",
+    "OpenCV-EPNP-RANSAC": "EPnP (OpenCV)",
+    "OpenCV-SQPNP-RANSAC-REFINE": "SQPnP (OpenCV)",
+    "LoP4P": "LoP4P",
+    "RPnP++": "RPnP++"
+  },
+  "success_definition": {
+    "solver_success": "finite proper pose returned",
+    "accurate": "rotation error < 5 deg and relative translation error < 10%"
+  },
+  "implementations": {
+    "OpenCV-P3P-RANSAC": "cv2.solvePnPRansac(SOLVEPNP_P3P)",
+    "OpenCV-AP3P-RANSAC": "cv2.solvePnPRansac(SOLVEPNP_AP3P)",
+    "OpenCV-EPNP-RANSAC": "cv2.solvePnPRansac(SOLVEPNP_EPNP)",
+    "OpenCV-SQPNP-RANSAC-REFINE": "cv2.solvePnPRansac(SOLVEPNP_SQPNP), followed by cv2.solvePnP(SOLVEPNP_ITERATIVE) on returned RANSAC inliers",
+    "LoP4P": "RPnP on four-point samples plus in-loop alpha=2 soft-weighted GN local refinement, 12 iterations",
+    "RPnP++": "rpnp_pp.solve with current C++ implementation, finalize=True and ransac_p=0.7"
+  },
+  "protocol_notes": {
+    "same_cases": true,
+    "opencv_confidence": 0.99,
+    "opencv_trials_reported": -1,
+    "lop4p_original_helper": "applyDSWGN2.m is absent; direct NumPy port of the available DSW-GN core is used",
+    "timing": "full Python call wall time, including data conversion and orchestration",
+    "plotting_note": "Raw data include an optional 0.97 extension for AP3P, EPnP, SQPnP, LoP4P, and RPnP++; checked-in figures plot rates through 0.95 and omit P3P"
+  },
+  "versions": {
+    "python": "3.12.13",
+    "platform": "Linux-5.15.0-56-generic-x86_64-with-glibc2.31",
+    "numpy": "2.5.1",
+    "opencv-python-headless": "5.0.0.93",
+    "rpnp_pp": "0.1.0",
+    "rpnp_pp_core_sha256": "668611b20394bd9b422ae1788ca41c524d1e9b141bac0d27ecbbcab568131ce0"
+  },
+  "git": {
+    "commit": "c6c6f3db6fee7e25554350c2385adec662604d03",
+    "branch": "main",
+    "dirty": true
+  }
+}

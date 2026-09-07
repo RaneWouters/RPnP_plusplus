@@ -1,0 +1,631 @@
+install/
+log/
+results/
+wheelhouse/
+_skbuild/
+.gitlab-ci-local/
+debug_data/
+.polyscope.ini
+imgui.ini
+
+# Build directories
+build/
+build_*/
+dist/
+dist_*/
+release_*/
+*.egg-info/
+
+# Python bindings compiled .so
+python/rpnp_pp/*.so
+
+# Local benchmark data and generated figures (not part of source releases)
+benchmark/generated/
+tests/debug_data.h
+
+
+# Created by https://www.toptal.com/developers/gitignore/api/python,c++
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,c++
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+# End of https://www.toptal.com/developers/gitignore/api/python,c++
+*.orig
+
+# Created by https://www.toptal.com/developers/gitignore/api/python
+# Edit at https://www.toptal.com/developers/gitignore?templates=python
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+# End of https://www.toptal.com/developers/gitignore/api/python
+
+# VSCode
+.vscode
+
+
+# ==========================================
+# 1. 编译产物 (Compiled Object files)
+# ==========================================
+*.slo
+*.lo
+*.o
+*.obj
+*.os
+*.ko
+
+# ==========================================
+# 2. 可执行文件与库文件 (Executables & Libraries)
+# ==========================================
+# 可执行文件
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# 动态链接库
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# 静态库
+*.a
+*.lib
+
+# ==========================================
+# 3. 构建目录与 CMake 产物 (Build & CMake)
+# ==========================================
+# 常见的构建输出目录
+build/
+cmake-build-*/
+out/
+bin/
+lib/
+
+# CMake 生成的临时文件
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+_deps/
+CMakeScripts/
+Testing/
+
+# 编译数据库 (通常由本地生成，不建议提交，除非团队强制要求)
+compile_commands.json
+
+# ==========================================
+# 4. 调试符号与核心转储 (Debug & Core Dumps)
+# ==========================================
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.ilk
+*.exp
+*.map
+core
+core.*
+vgcore.*
+*.vgcore
+
+# ==========================================
+# 5. IDE 和编辑器配置 (IDEs & Editors)
+# ==========================================
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# CLion / JetBrains
+.idea/
+
+# VS Code
+.vscode/
+# 如果你想保留 VS Code 的工作区配置，可以注释掉上面一行，并解开下面几行：
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+
+# Eclipse
+.project
+.cproject
+.settings/
+.build/
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ==========================================
+# 6. 操作系统生成的文件 (OS Generated)
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ==========================================
+# 7. 包管理器与依赖 (Package Managers)
+# ==========================================
+# vcpkg
+vcpkg_installed/
+vcpkg/
+
+# Conan
+conanbuildinfo.txt
+conanfile.txt
+conanfile.py
+CMakeUserPresets.json
+
+# ==========================================
+# 8. 特定框架/工具 (可选，按需取消注释)
+# ==========================================
+# --- Qt ---
+# moc_*.cpp
+# moc_*.h
+# qrc_*.cpp
+# ui_*.h
+# Makefile.Debug
+# Makefile.Release
+# *.pro.user
+
+# --- Coverage / 测试 ---
+# *.gcda
+# *.gcno
+# *.gcov
+# coverage/
+# lcov/
+
+# --- Doxygen ---
+# html/
+# latex/
+# doxygen_sqlite3.db
+
+# The generic crash-dump pattern "core" above also matches Eigen/Core on
+# case-insensitive Git configurations. These vendored headers are required.
+!3rdparty/eigen3/Eigen/Core
+!3rdparty/eigen3/Eigen/src/Core/
+!3rdparty/eigen3/Eigen/src/Core/**
+
+# ==========================================
+# Additional release and local-tool artifacts
+# ==========================================
+
+# Python distribution archives and build metadata
+*.whl
+*.tar.gz
+*.tgz
+*.zip
+pip-wheel-metadata/
+
+# Compiled Python extension modules
+*.pyd
+
+# CMake/Ninja artifacts generated in the repository root
+*.ninja
+.ninja_deps
+.ninja_log
+install_manifest.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+
+# Additional Python tool caches
+.ruff_cache/
+.pyright/
+.pylint.d/
+.pyre/
+
+# Temporary files, logs, and local process state
+*.tmp
+*.temp
+*.bak
+*.pid
+*.log
+tmp/
+temp/
+.tmp/
