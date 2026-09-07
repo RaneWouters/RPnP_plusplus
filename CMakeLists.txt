@@ -41,7 +41,7 @@ target_compile_definitions(r2ppnp PUBLIC EIGEN_MPL2_ONLY)
 set_global_target_properties(r2ppnp)
 
 if(INSTALL_CPP_SDK)
-    install(FILES LICENSE THIRD_PARTY_NOTICES.md
+    install(FILES LICENSE
         DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/r2ppnp)
     install(TARGETS r2ppnp
         EXPORT r2ppnpTargets
