@@ -1,10 +1,10 @@
 #include "r2ppnp/hough_voting.h"
 #include "r2ppnp/utils.h"
 #include "r2ppnp/optimize_gn.h"
+#include "debug_env.h"
 #include <Eigen/Dense>
 #include <cmath>
 #include <algorithm>
-#include <cstdlib>
 #include <limits>
 #include <vector>
 #include <cstdio>
@@ -71,7 +71,7 @@ void gaussian_smooth_circular_1d(
         }
         H_smooth_1d(i) = val;
     }
-    if (getenv("HOUGH_DEBUG") && N > 618) {
+    if (env_flag_enabled("HOUGH_DEBUG") && N > 618) {
         int lin = 617;
         std::fprintf(stderr, "SMOOTH1D kern=[%.4f,%.4f,%.4f] lin=%d raw_before=%f raw_after=%f\n",
             G(0), G(1), G(2), lin, H_1d(lin), H_smooth_1d(lin));
@@ -96,7 +96,7 @@ void rebuild_histogram_1d(
     Eigen::VectorXd H_smooth_1d;
     gaussian_smooth_circular_1d(H_1d, H_smooth_1d, nr1, nr2);
 
-    bool hough_debug = (getenv("HOUGH_DEBUG") != nullptr);
+    bool hough_debug = env_flag_enabled("HOUGH_DEBUG");
     if (hough_debug) {
         int lin = 10 * nr2 + 17;
         if (lin >= 0 && lin < total_bins) {
@@ -391,7 +391,7 @@ TrialResult rpnp_trial(
     }
 
     int total_bins = nr1 * nr2;
-    bool hough_debug = (getenv("HOUGH_DEBUG") != nullptr);
+    bool hough_debug = env_flag_enabled("HOUGH_DEBUG");
     Eigen::MatrixXd H_smooth;
     rebuild_histogram_1d(jk_l, nr1, nr2, H_smooth);
 

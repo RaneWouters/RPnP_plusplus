@@ -1,10 +1,10 @@
 #include "r2ppnp/optimize_gn.h"
 #include "r2ppnp/utils.h"
+#include "debug_env.h"
 #include <Eigen/Cholesky>
 #include <Eigen/Dense>
 #include <cmath>
 #include <algorithm>
-#include <cstdlib>
 #include <cstdio>
 
 #ifdef DEBUG_RPNP_TRIAL
@@ -102,7 +102,7 @@ GNResult dsw_gn(
     double converge_threshold,
     const Eigen::VectorXd& err_in)
 {
-    static bool gn_debug = (getenv("GN_DEBUG") != nullptr);
+    static bool gn_debug = env_flag_enabled("GN_DEBUG");
     GNResult result;
     result.R = R0;
     result.t = t0;
@@ -292,7 +292,7 @@ GNResult optimize_gn(
     double best_score = w_in.sum();
     Eigen::VectorXd w = w_in;
 
-    bool gn_debug = (getenv("GN_DEBUG") != nullptr);
+    bool gn_debug = env_flag_enabled("GN_DEBUG");
     if (gn_debug) {
         std::fprintf(stderr, "GN_ENTER n=%ld cw0=%d best_score0=%.6f thv=%.6f w_order=%d max_iter=%d\n",
             (long)n, cw, best_score, thv, weight_order, max_iter);
